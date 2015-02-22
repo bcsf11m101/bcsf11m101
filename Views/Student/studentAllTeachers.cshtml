@@ -1,0 +1,279 @@
+﻿@using pucit_openCourseWare.Models;
+@{
+    ViewBag.Title = "studentAllTeachers";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png">-->
+
+    <title>Onassis - Bootstrap 3 Theme</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+      <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+      <link href="~/Content/bootstrap-responsive.min.css" rel="stylesheet" />
+      <link href="~/Content/responsive.css" rel="stylesheet" />
+    
+    <!-- Custom styles for this template -->
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+      <link href="~/Content/main2.css" rel="stylesheet" />
+      
+
+    <script src="~/Scripts/jquery.min.js"></script>
+	<script src="~/Scripts/Chart.js"></script>
+      <script src="~/Scripts/modernizr.js"></script>
+	
+     <script>
+         $(function () {
+             if ($('#projects').length > 0) {
+                 var $container = $('#projects');
+
+                 $container.imagesLoaded(function () {
+                     $container.isotope({
+                         // options
+                         animationEngine: 'best-available',
+                         itemSelector: '.item-thumbs',
+                         layoutMode: 'fitRows'
+                     });
+                 });
+
+
+                 // filter items when filter link is clicked
+                 var $optionSets = $('#options .option-set'),
+                     $optionLinks = $optionSets.find('a');
+
+                 $optionLinks.click(function () {
+                     var $this = $(this);
+                     // don't proceed if already selected
+                     if ($this.hasClass('selected')) {
+                         return false;
+                     }
+                     var $optionSet = $this.parents('.option-set');
+                     $optionSet.find('.selected').removeClass('selected');
+                     $this.addClass('selected');
+
+                     // make option object dynamically, i.e. { filter: '.my-filter-class' }
+                     var options = {},
+                         key = $optionSet.attr('data-option-key'),
+                         value = $this.attr('data-option-value');
+                     // parse 'false' as false boolean
+                     value = value === 'false' ? false : value;
+                     options[key] = value;
+                     if (key === 'layoutMode' && typeof changeLayoutMode === 'function') {
+                         // changes in layout modes need extra logic
+                         changeLayoutMode($this, options)
+                     } else {
+                         // otherwise, apply new options
+                         $container.isotope(options);
+                     }
+
+                     return false;
+                 });
+             }
+         });
+
+     </script>
+
+      <style>
+    ul  li
+    {
+        display : inline;
+    }
+</style>
+	
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
+    
+  </head>
+
+  <body data-spy="scroll" data-offset="0" data-target="#theMenu">
+		
+	<!-- Menu -->
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+           
+		        <h1 class="logo"><a href="index.html#home">@Model.name</a></h1>
+            
+		  <em class="icon-remove menu-close"></em> 
+          
+          <a href="#teachers" class="smoothScroll">TEACHERS</a> 
+          <a href="#contact" class="smoothScroll">CONTACT</a>
+             <a href="@Url.Action("Index", "Home")" class="smoothScroll">SIGN-OUT</a>
+           <a href="studentView.html"><i class="icon-facebook"></i></a>
+			<a href="#"><i class="icon-twitter"></i></a>
+			<a href="#"><i class="icon-dribbble"></i></a>
+			<a href="#"><i class="icon-envelope"></i></a>
+            </div>
+		
+		<!-- Menu button -->
+		<div id="menuToggle"><i class="icon-reorder"></i></div>
+	</nav>
+
+
+	
+    <!-- ========== WHITE SECTION ========== -->
+      <section id="main" name="main"></section>
+	<div id="w">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+				<h3>WELCOME TO <bold>PUCIT</bold>. <bold>OPEN-COURSE WARE</bold><br>DOWNLOAD IMPORTANT STUFF FROM <br><bold>TEACHER'S REPOSITORY</bold></h3>
+				</div>
+			</div>
+		</div><!-- /container -->
+	</div><!-- /w -->
+	
+	<!-- TEACHERS VIEW SECTION START -->
+    
+      
+    
+    	<section id="teachers" name="teachers"></section>
+      <div id="g">
+         
+        <div class="row">
+        	<!--<div class="span2">
+            	<!-- Filter -->
+               <nav id="options" class="work-nav">
+                    <ul id="filters" class="option-set" data-option-key="filter" >
+                    	<li class="type-work"></li>
+                        <li><a href="#filter" data-option-value="*" class="selected" style="font-weight:bold">All Teachers        </a></li>
+                    	<li><a href="#filter" data-option-value=".alphabetA" style="font-weight:bold; color:black">A</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetB" style="font-weight:bold; color:black">B</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetC" style="font-weight:bold; color:black">C</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetD" style="font-weight:bold; color:black">D</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetE" style="font-weight:bold; color:black">E</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetF" style="font-weight:bold; color:black">F</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetG" style="font-weight:bold; color:black">G</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetH" style="font-weight:bold; color:black">H</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetI" style="font-weight:bold; color:black">I</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetJ" style="font-weight:bold; color:black">J</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetK" style="font-weight:bold; color:black">K</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetL" style="font-weight:bold; color:black">L</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetM" style="font-weight:bold; color:black">M</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetN" style="font-weight:bold; color:black">N</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetO" style="font-weight:bold; color:black">O</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetP" style="font-weight:bold; color:black">P</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetQ" style="font-weight:bold; color:black">Q</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetR" style="font-weight:bold; color:black">R</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetS" style="font-weight:bold; color:black">S</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetT" style="font-weight:bold; color:black">T</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetU" style="font-weight:bold; color:black">U</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetV" style="font-weight:bold; color:black">V</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetW" style="font-weight:bold; color:black">W</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetX" style="font-weight:bold; color:black">X</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetY" style="font-weight:bold; color:black">Y</a></li>
+                        <li><a href="#filter" data-option-value=".alphabetZ" style="font-weight:bold; color:black">Z</a></li>
+                    </ul>
+               </nav>
+            </div>
+                <!-- End Filter 
+            </div>-->
+
+            
+           <!-- <div class="span9">-->
+          <br />
+            	<div class="row" style="margin-left:30px">
+                	<section id="projects" class="isotope" style="position: relative; overflow: hidden; height: 438px;">
+                    	<ul id="thumbs">
+
+
+         
+                           
+                     @foreach (var s in (ViewBag.Teachers as IEnumerable<Teacher>))
+                     {
+                                var classfilter="alphabet"+@s.name.First().ToString();
+                                    
+                                            <li class="item-thumbs span2 @classfilter">
+                                            <a href="@Url.Action("teacherViewStudent", "Student", new { id = @s.Id, stId=@Model.Id })" />
+
+                                            @if(@s.gender.First().ToString().Equals("M"))
+                                            {
+                                                <img src="~/img/profilepic.jpg" class="img-circle"/>
+                                            }
+                                             else{
+                                                 <img src="~/img/femalpic.jpg" class="img-circle"/>
+                                             }
+                                                <label style="color:black">@s.name</label>
+                                            </li>
+                                 
+                           
+ 
+                     }
+                               
+                        
+                        </ul>
+                    </section>
+                    
+            	</div>
+           <!-- </div>-->
+     
+          </div>
+         
+        <!-- End Portfolio Projects -->
+    
+	
+	<!-- ========== FOOTER SECTION ========== -->
+	<section id="contact" name="contact"></section>
+	<div id="f">
+		<div class="container">
+			<div class="row">
+					<h3><b>CONTACT US</b></h3>
+					<br>
+					<div class="col-lg-4">
+						<h3><b>Send Us A Message:</b></h3>
+						<h3>Principal@pucit.edu.pk<br>
+					  </h3>
+						<br>
+					</div>
+					
+					<div class="col-lg-4">
+					  <h3><strong>Call Us:</strong></h3>
+					  <h3>111-923-923-ext-113<br>
+					  </h3>
+						<br>
+					</div>
+					
+					<div class="col-lg-4">
+					  <h3><strong>We Are Social</strong></h3>
+					  <p>
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
+						</p>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div><!-- /container -->
+	</div><!-- /f -->
+	
+	<div id="c">
+		<div class="container">
+		  <p>Created by <a href="http://www.blacktie.co">BCSF11M101 </a></p>
+		</div>
+	</div>
+	
+	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> <!-- jQuery Core -->
+	<script src="~/Scripts/classie.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/smoothscroll.js"></script>
+	<script src="~/Scripts/main.js"></script>
+      <script src="~/Scripts/main2.js"></script>
+      <script src="~/Scripts/jquery.isotope.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+﻿@using pucit_openCourseWare.Models
+@model pucit_openCourseWare.Models.Teacher
+@{
+    ViewBag.Title = "Admin";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Registration form Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+
+    
+    <link href="~/Content/admin/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+     <link href="~/Content/main.css" rel="stylesheet">
+    <!--<link href="~/Content/style.css" rel="stylesheet">-->
+
+     
+
+	
+    
+       <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+
+
+    <script src="~/Scripts/jquery.min.js"></script>
+	<script src="~/Scripts/Chart.js"></script>
+      <script src="~/Scripts/index.js"></script>
+      <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+      
+	
+
+	
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
+
+
+    <script src="~/Scripts/admin/bootstrap.min.js"></script>
+    <script src="~/Scripts/admin/jquery-1.10.2.min.js"></script>
+
+    <!-- for email id availability -->
+
+      @Scripts.Render("~/bundles/jquery")
+    <script>
+       
+        $ (document).ready(function() {
+
+            $('#InputEmailTeacher').change(function checkEmailAvailability()
+            {
+                var url = "/Admin/checkEmailTeacher";
+                var email= $('#InputEmailTeacher').val();
+
+                $.getJSON( "/Admin/checkEmailTeacher?input=" +email,function(data){
+
+                    if(data=="*AVAILABLE")
+                        $('#Result').text(data).css('color','green')
+                    else
+                        $('#Result').text(data).css('color','red')
+                       
+                });
+                  
+            })
+            
+            $('#InputEmailS').change(function checkEmailAvailability()
+            {
+                var url = "/Admin/checkEmailStudent";
+                var email= $('#InputEmailS').val();
+
+                $.getJSON( "/Admin/checkEmailStudent?input=" +email,function(data){
+
+                    if(data=="*AVAILABLE")
+                        $('#ResultS').text(data).css('color','green')
+                    else
+                        $('#ResultS').text(data).css('color','red')
+                       
+                });
+            })
+            
+        })
+
+
+
+
+
+    </script>
+</head>
+<body style="background-color:#1D303F">
+
+
+<div class="container">
+
+<div class="page-header" style="background-color:#15232E" >
+    <h1 style="background-color:#1ABC9C; text-align:center; text-decoration-color:white">REGISTER PANEL</h1>
+    <!--<input type="button" id="signOut" value="SIGN-OUT"  onclick="location.href='@Url.Action("Index","Home")'"  class="btn btn-info"  />-->
+
+</div>
+    <br />
+
+<!-- Registration form - START -->
+<div class="container" >
+    <div class="row">
+         <div class="col-lg-5">
+        <form role="form" id="formTeacher" action="/Home/AddTeacher" method="post">
+           
+                <div  style="background-color:#CF9614" class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
+                <div class="form-group">
+                    @Html.AntiForgeryToken()
+                     @Html.ValidationSummary(true)
+                    <label for="InputName">Enter Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="InputNameTeacher" id="InputNameTeacher" placeholder="Enter Name" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                 </div>
+                    
+                        @*@Html.TextBoxFor(model=>model.name)*@
+                     @Html.ValidationMessageFor(model=>model.name)
+                        
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Enter Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="InputEmailTeacher" name="InputEmailTeacher" placeholder="Enter Email" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                        
+                    </div>
+                    <div id="Result"></div>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Enter Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="InputPasswordTeacher" name="InputPassTeacher" placeholder="Password" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.password)
+                </div>
+
+                <div class="form-group">
+                <label>GENDER   </label>
+
+               
+                     <input type="radio" name="Gender" value="M" required>MALE</>
+                    <input type="radio" name="Gender" value="F" required>FEMALE</>
+
+                         
+               
+                </div>
+                @Html.ValidationMessageFor(model=>model.gender)
+                <input type="submit" name="submit" id="submit" value="TEACHER-SIGN-UP" class="btn btn-info pull-right">
+                    
+           
+                        
+        </form>
+              </div>
+        
+        
+
+         <div class="col-lg-5 col-md-push-1">
+        <form role="form" id="formStudent" action="/Home/AddStudent" method="post">
+       
+            <div class="col-md-12">
+             <div style="background-color:#CF9614" class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
+            
+                <div class="form-group">
+                    <label for="InputName">Enter Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="InputNameS" id="InputName" placeholder="Enter Name" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="InputEmail">Enter Email</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="InputEmailS" name="InputEmailS" placeholder="Enter Email" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                    <div id="ResultS"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="InputEmail">Enter Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="InputEmailSecond" name="InputPassS" placeholder="Password" required>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                <br />
+    
+                 <br />
+                <input type="submit" name="submit" id="submitS" value="STUDENT-SIGNUP" class="btn btn-info pull-right">
+            </div>
+               
+            
+            </form>
+             </div>
+        </div>
+    </div>
+        </div>
+   
+<!-- Registration form - END -->
+
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/classie.js"></script>
+
+
+
+</body>
+</html>

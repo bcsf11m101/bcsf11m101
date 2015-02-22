@@ -1,0 +1,386 @@
+﻿
+@using pucit_openCourseWare.Models
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Registration form Template | PrepBootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+
+    
+    <link href="~/Content/admin/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+     <link href="~/Content/main.css" rel="stylesheet">
+    <!--<link href="~/Content/style.css" rel="stylesheet">-->
+
+     
+
+	
+    
+       <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+
+
+    <script src="~/Scripts/jquery.min.js"></script>
+	<script src="~/Scripts/Chart.js"></script>
+      <script src="~/Scripts/index.js"></script>
+      <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+      
+	
+
+	
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
+
+
+    <script src="~/Scripts/admin/bootstrap.min.js"></script>
+    <script src="~/Scripts/admin/jquery-1.10.2.min.js"></script>
+</head>
+<body data-spy="scroll" data-offset="0" data-target="#theMenu">
+		
+	<!-- Menu -->
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+		  <h1 class="logo"><a href="index.html#home">ADMIN</a></h1>
+		  <em class="icon-remove menu-close"></em> 
+          <a href="\Admin\Admin" class="smoothScroll">ENROLL TEACHERS/STUDENTS</a> 
+          <a href="\Admin\Manage" class="smoothScroll">MANAGE TEACHERS/STUDENTS</a> 
+            <a href="\Home\Index" class="smoothScroll">SIGN-OUT</a>
+           <a href="studentView.html"><i class="icon-facebook"></i></a>
+			<a href="#"><i class="icon-twitter"></i></a>
+			<a href="#"><i class="icon-dribbble"></i></a>
+			<a href="#"><i class="icon-envelope"></i></a>
+            </div>
+		
+		<!-- Menu button -->
+		<div id="menuToggle"><i class="icon-reorder"></i></div>
+	</nav>
+
+      <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/classie.js"></script>
+
+    <style>
+        
+    /* expanding input CSS only */
+    #myInputT		{
+      width:310px;
+      -webkit-transition:width 0.3s ease-in-out;
+    }
+   
+     #myInputS		{
+      width:310px;
+      -webkit-transition:width 0.3s ease-in-out;
+    }
+   
+
+  
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#searchT").click(function () {
+
+                $('#collapse2').hide();
+
+                var searchTeacherName = $("#myInputT").val();
+
+                var trHTML = '';
+                //$("#display").empty();
+               
+                $.getJSON("/Admin/getTeachersByName?name=" + searchTeacherName, function (data) {
+
+                    var table = $('#display'), tbody = $('#teacherTableBody');
+                    tbody.empty();
+
+                    $.each(data, function (i, item) {
+                       
+                        var actionLink = '@Html.ActionLink("DELETE","DeleteTeacher","Admin",new {id=1},null)';
+                        actionLink = actionLink.replace("1", item.Id);
+
+                        trHtml = ("<tr class='warning'><th>" + item.Id + "</th><th>" + item.name + "</th>" + "<th>" + item.email + "</th>" + "<th>" + item.password + "</th>" + "<th>" + item.gender + "</th>"+"<th>"+ actionLink + "</th>" +"</tr>");
+                        tbody.append(trHtml);
+                        
+
+                    });
+                });
+                $('#collapse1').show();
+
+            });
+
+            $("#searchS").click(function () {
+
+                $('#collapse1').hide();
+                var searchStudentName = $("#myInputS").val();
+
+                var trHTML = '';
+                //$("#display").empty();
+
+                $.getJSON("/Admin/getStudentsByName?name=" + searchStudentName, function (data) {
+
+                    tbody = $('#studentTableBody');
+                    tbody.empty();
+
+                    $.each(data, function (i, item) {
+
+                        var actionLink = '@Html.ActionLink("DELETE","DeleteStudent","Admin",new {id=1},null)';
+                        actionLink = actionLink.replace("1", item.Id);
+
+                        trHtml = ("<tr class='warning'><th>" + item.Id + "</th><th>" + item.name + "</th>" + "<th>" + item.email + "</th>" + "<th>" + item.password + "</th>" + "<th>" + actionLink + "</th>" + "</tr>");
+                        tbody.append(trHtml);
+
+                    });
+                });
+
+                $('#collapse2').show();
+
+            });
+
+            $("#searchallS").click(function () {
+
+                $('#collapse1').hide();
+
+                var trHTML = '';
+                //$("#display").empty();
+
+                $.getJSON("/Admin/getAllStudents", function (data) {
+
+                    tbody = $('#studentTableBody');
+                    tbody.empty();
+
+                    $.each(data, function (i, item) {
+
+                        var actionLink = '@Html.ActionLink("DELETE","DeleteStudent","Admin",new {id=1},null)';
+                        actionLink = actionLink.replace("1", item.Id);
+
+                        trHtml = ("<tr class='warning'><th>" + item.Id + "</th><th>" + item.name + "</th>" + "<th>" + item.email + "</th>" + "<th>" + item.password + "</th>" + "<th>" + actionLink + "</th>" + "</tr>");
+                        tbody.append(trHtml);
+
+                    });
+                });
+
+                $('#collapse2').show();
+
+            });
+            $("#searchallT").click(function () {
+
+                
+                $('#collaps2').hide();
+
+                var trHTML = '';
+                //$("#display").empty();
+
+                $.getJSON("/Admin/getAllTeachers", function (data) {
+
+                    var table = $('#display'), tbody = $('#teacherTableBody');
+                    tbody.empty();
+
+                    $.each(data, function (i, item) {
+
+                        var actionLink = '@Html.ActionLink("DELETE","DeleteTeacher","Admin",new {id=1},null)';
+                        actionLink = actionLink.replace("1", item.Id);
+
+                        trHtml = ("<tr class='warning'><th>" + item.Id + "</th><th>" + item.name + "</th>" + "<th>" + item.email + "</th>" + "<th>" + item.password + "</th>" + "<th>" + item.gender + "</th>" + "<th>" + actionLink + "</th>" + "</tr>");
+                        tbody.append(trHtml);
+
+                    });
+                });
+
+                $('#collapse1').show();
+
+             });
+
+
+
+        });
+    </script>
+
+    <!-- delete page -->
+
+    <div style="background-color:mediumaquamarine" >
+    <div class="row" style="margin-top:40px; margin-left:40px; background-color:mediumaquamarine">
+      
+      <div class="form" style="width:510px ; align-items:center; margin-left:310px">
+         <div style="background-color:mediumaquamarine; margin-top:40px">
+        <div class="input-group">
+
+        <input type="text" class="form-control input-lg" id="myInputT" placeholder="ENTER TEACHER NAME">
+            <div class="input-group-btn" style="margin-left:90px">
+
+        <button class="btn btn-default" style="height:47px; background-color:crimson; text-decoration-color:white" type="submit" name="searchT" id="searchT">SEARCH TEACHER</button>
+      <button class="btn btn-default" style="height:47px; background-color:tan;text-decoration-color:white" type="submit" id="searchallT">SHOW ALL TEACHERS</button>
+            
+            </div>
+            </div>
+        </div>
+       
+      <br /> 
+   <div style="background-color:mediumaquamarine">
+  <div class="input-group">
+        <input type="text" class="form-control input-lg" id="myInputS" placeholder="ENTER STUDENT NAME">
+            <div class="input-group-btn">
+        <button class="btn btn-default" style="height:47px; background-color:crimson; text-decoration-color:white" type="submit" id="searchS">SEARCH STUDENT</button>
+                <button class="btn btn-default" style="height:47px; background-color:tan; text-decoration-color:white" type="submit" id="searchallS">SHOW ALL STUDENTS</button>
+      </div>
+            </div>
+  <br />
+    
+</div>
+    </div>
+        </div>
+        <br />
+        <br />
+        </div>
+    <br />
+    <br />
+    <br />
+
+   
+     
+
+        <div class="container" >
+    <div class="row">
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                                <div class="panel-heading" style="background-color:aquamarine">
+                                    <h4 class="panel-title" style="font-weight:bold">
+                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        TEACHERS DATA
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                  <div class="panel-body">
+
+
+    		            <div class="table-responsive">
+
+                             <table id="teacherTable" class="table">
+                                <thead style="color:red">
+                                    <tr>
+                                        <th>TEACHER ID</th>
+                                        <th>NAME</th>
+                                        <th>EMAIL</th>
+                                        <th>PASSWORD</th>
+                                        <th>GENDER</th>
+                                        <th>DELETE TEACHER</th>
+            
+                                    </tr>
+                                </thead>
+                                <tbody id="teacherTableBody" >
+
+                                    @{int i=0;}
+                                     @foreach( var v in (ViewBag.Teachers as IEnumerable<Teacher>))
+                                     {
+                                        
+                        
+                                             i++;
+                                                    <tr class="warning">
+                                                        <th>@v.Id</th>
+                                                        <th>@v.name</th>
+                                                        <th>@v.email</th>
+                                                        <th>@v.password</th>
+                                                        <th>@v.gender</th>
+                                                        <th>@Html.ActionLink("DELETE","DeleteTeacher","Admin",new {id=@v.Id},null)</th>
+
+            
+                                                    </tr>
+                                     }
+                                     
+                       
+                                    </tbody>
+                                 </table>
+
+                             </div>
+                </div>
+              </div>
+                </div>
+
+
+
+
+
+            <div class="panel panel-default">
+                                <div class="panel-heading" style="background-color:aquamarine">
+                                    <h4 class="panel-title" style="font-weight:bold">
+                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                        STUDENTS DATA
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse2" class="panel-collapse collapse">
+                  <div class="panel-body">
+
+
+    		            <div class="table-responsive">
+
+                             <table class="table">
+                                <thead style="color:red">
+                                    <tr>
+                                        <th>SEQ.#</th>
+                                        <th>NAME</th>
+                                        <th>EMAIL</th>
+                                        <th>PASSWORD</th>
+                                        <th>DELETE STUDENT</th>
+                                   </tr>
+                                </thead>
+                                <tbody id="studentTableBody">
+
+                                    
+                                    @{int j=0;}
+                                     @foreach( var v in (ViewBag.Students as IEnumerable<Student>))
+                                     {
+                                        
+                        
+                                             j++;
+                                                    <tr class="warning">
+                                                        <th>@v.Id</th>
+                                                        <th>@v.name</th>
+                                                        <th>@v.email</th>
+                                                        <th>@v.password</th>
+                                                        <th>@Html.ActionLink("DELETE","DeleteStudent","Admin",new {id=@v.Id},null)</th>
+                                                       
+            
+                                                    </tr>
+                                     }
+                                     
+                       
+                                    </tbody>
+                                 </table>
+
+
+
+
+                             </div>
+                </div>
+              </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+        
+
+
+        </div>
+        </div>
+
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,248 @@
+﻿@using pucit_openCourseWare.Models;
+@model pucit_openCourseWare.Models.Teacher
+
+@{
+    ViewBag.Title = "teacherViewStudent";
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="shortcut icon" href="assets/ico/favicon.png">-->
+
+    <title>PUCIT-OCW</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/main.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+	
+
+    <script src="~/Scripts/jquery.min.js"></script>
+	<script src="~/Scripts/Chart.js"></script>
+	<script src="~/Scripts/modernizr.custom.js"></script>
+	
+
+	
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+      <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+
+
+  <body data-spy="scroll" data-offset="0" data-target="#theMenu">
+		
+      @{int StudentId = 0;}
+      @{Student s = ViewBag.currStudent;
+        StudentId = s.Id;}
+
+    
+	<!-- Menu -->
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+		  <h1 class="logo"><a href="index.html#home">PUCIT-OCW</a></h1>
+		  <em class="icon-remove menu-close"></em> 
+          <a href="#home" class="smoothScroll">HOME</a> 
+          <a href="@Url.Action("studentAllTeachers", "Student", new { id = @StudentId })" class="smoothScroll">ALL TEACHERS</a> 
+          <!--<a href="#contact" class="smoothScroll">SEARCH</a>-->
+         <a href="@Url.Action("Index","Home")" class="smoothScroll">SIGN-OUT</a>
+           <a href="studentView.html"><i class="icon-facebook"></i></a>
+			<a href="#"><i class="icon-twitter"></i></a>
+			<a href="#"><i class="icon-dribbble"></i></a>
+			<a href="#"><i class="icon-envelope"></i></a>
+            </div>
+		
+		<!-- Menu button -->
+		<div id="menuToggle"><i class="icon-reorder"></i></div>
+	</nav>
+
+
+	
+	<!-- ========== HEADER SECTION ========== -->
+	<section id="home" name="home"></section>
+	
+	
+	
+	<!-- ========== WHITE SECTION ========== -->
+      
+	<div id="w">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+               
+                                @if (@Model.gender.First().ToString().Equals("M"))
+                   {
+                        <img src="~/img/profilepic.jpg" class="img-circle"/>
+                   }
+                   else
+                   {
+                        <img src="~/img/femalpic.jpg" class="img-circle"/>
+                   }
+                    
+                                            
+                                               
+                
+                   
+                        <h3><bold>@Model.name</bold><bold></h3>
+                    
+				</div>
+			</div>
+		</div><!-- /container -->
+	</div><!-- /w -->
+
+	
+	<!-- ========== ABOUT - TeacherFolders and Files ========== -->
+  <section id="about" name="about"></section>
+	<div id="g">
+		<div class="container">
+
+            <div class="panel-group" id="accordion">
+                
+                @{ var folderCount = 1;}
+
+            @foreach(var fn in (ViewBag.Folders as IEnumerable<Folder>))
+            {
+                var divId = "collapse" + folderCount.ToString();
+                var href = "#collapse" + folderCount.ToString();
+                
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="background-color:aquamarine">
+                                    <h4 class="panel-title" style="font-weight:bold">
+                    <a data-toggle="collapse" data-parent="#accordion" href="@href">
+                        @fn.name
+                    </a>
+                  </h4>
+                </div>
+                <div id="@divId" class="panel-collapse collapse">
+                  <div class="panel-body">
+
+
+    		            <div class="table-responsive">
+        
+            	            <table class="table">
+                                <thead style="color:royalblue">
+                                    <tr>
+                                        <th>FILE NO#</th>
+                                        <th>FILE NAME</th>
+                                        <th>DOWNLOAD FILE</th>
+                                        <th>DATE UPDATED</th>
+            
+                                    </tr>
+                                </thead>
+                                <tbody >
+                        
+                     @foreach( var v in (ViewBag.Files as IEnumerable<teacherFile>))
+                     {
+                         int i=0;
+                         if(@v.FolderId==@fn.Id)
+                         {
+                             i++;
+                                    <tr class="warning">
+                                        <th>@i</th>
+                                        <th>@v.filename</th>
+                                        <th>
+                                            @Html.ActionLink("Download","FileDownload","Student",new {fileId=@v.Id},null )
+
+                                        </th>
+                                        <th>04/07/2014</th>
+            
+                                    </tr>
+                     }
+                     }
+                       
+                                </tbody>
+                            </table>
+         
+		    
+	  		            </div>
+          
+                  </div>
+                </div>
+              </div>
+                folderCount++;
+            }
+
+
+ </div>
+		</div><!-- /container -->
+	</div><!-- /g -->
+    
+    <!-- ========== SERVICES - GREY SECTION ========== -->
+	<section id="services" name="services"></section>
+	<div id="w">
+		<div class="container">
+        
+ 			
+	</div>
+    </div>
+	
+	
+	<!-- ========== FOOTER SECTION ========== -->
+	<section id="contact" name="contact"></section>
+	<div id="f">
+		<div class="container">
+			<div class="row">
+					<h3><b>CONTACT US</b></h3>
+					<br>
+					<div class="col-lg-4">
+						<h3><b>Send Us A Message:</b></h3>
+						<h3>Principal@pucit.edu.pk<br>
+					  </h3>
+						<br>
+					</div>
+					
+					<div class="col-lg-4">
+					  <h3><strong>Call Us:</strong></h3>
+					  <h3>111-923-923-ext-113<br>
+					  </h3>
+						<br>
+					</div>
+					
+					<div class="col-lg-4">
+					  <h3><strong>We Are Social</strong></h3>
+					  <p>
+							<a href="index.html#"><i class="icon-facebook"></i></a>
+							<a href="index.html#"><i class="icon-twitter"></i></a>
+							<a href="index.html#"><i class="icon-envelope"></i></a>
+						</p>
+						<br>
+					</div>
+				</div>
+			
+		</div><!-- /container -->
+	</div><!-- /f -->
+	
+	<div id="c">
+		<div class="container">
+		  <p>Created by <a href="http://www.blacktie.co">BCSF11M101 </a></p>
+		</div>
+	</div>
+	
+	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="~/Scripts/classie.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/smoothscroll.js"></script>
+	<script src="~/Scripts/main.js"></script>
+</body>
+</html>
